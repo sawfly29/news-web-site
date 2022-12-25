@@ -1,0 +1,18 @@
+.breadcrumbs {
+  &__divider {
+    &:before, &:after {
+      content: "\00a0 ";
+    }
+  }
+
+  &__link {
+    &_parent {
+      text-decoration: unset;
+      color: var(--breadcrumbs-parent-link);
+    }
+
+    &_current {
+      color: var(--breadcrumbs-current-link);
+    }
+  }
+}

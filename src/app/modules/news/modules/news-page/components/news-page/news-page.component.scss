@@ -1,0 +1,43 @@
+@use "src/styles/mixins/media";
+
+.news-page {
+  margin-top: 12px;
+  padding: 16px 12px;
+
+  @include media.media-tablet {
+    margin-top: 16px;
+    padding: 24px 16px;
+  }
+
+  @include media.media-desktop {
+    padding: 32px 24px;
+  }
+
+  &__header {
+    font-size: 20px;
+    text-align: justify;
+    color: var(--news-page-title-color);
+
+    &.mat-mdc-card-header {
+      padding: unset;
+    }
+
+    @include media.media-tablet {
+      text-align: unset;
+      font-size: 24px;
+    }
+
+    @include media.media-desktop {
+      font-size: 32px;
+    }
+  }
+
+  &__date {
+    color: var(--news-page-date-color);
+
+    @include media.media-mobile {
+      margin-top: 8px;
+    }
+  }
+}
+
