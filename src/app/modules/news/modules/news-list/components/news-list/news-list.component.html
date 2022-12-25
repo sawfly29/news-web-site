@@ -1,0 +1,19 @@
+<section class="news-list">
+  <header class="news-list__header">
+    <h1 class="news-list__header-title">AutoDOC.RU - Новости</h1>
+    <button
+      class="news-list__news-create-action"
+      (click)="onCreateNewsButtonClick()"
+      mat-raised-button color="primary"
+    >
+      Создать новость
+    </button>
+  </header>
+  <div class="news-list__list">
+    <app-news-preview *ngFor="let news of news$ | async" [newsPreviewData]="news"></app-news-preview>
+  </div>
+  <div *ngIf="isLoadingNews" class="spinner-container">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+</section>
+

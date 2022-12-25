@@ -1,0 +1,16 @@
+@use "src/styles/mixins/media";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: var(--mobile-vertical-padding) 12px;
+
+  @include media.media-tablet {
+    padding: var(--tablet-vertical-padding) 16px;
+  }
+
+  @include media.media-desktop {
+    padding: var(--desktop-vertical-padding) 64px;
+  }
+}

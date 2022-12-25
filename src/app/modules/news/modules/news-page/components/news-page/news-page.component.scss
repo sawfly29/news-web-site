@@ -1,0 +1,29 @@
+@use "src/styles/mixins/media";
+
+.news-page {
+  margin-top: 12px;
+
+  @include media.media-tablet {
+    margin-top: 16px;
+  }
+
+  &__header {
+    font-size: 20px;
+    text-align: justify;
+    color: var(--news-page-title-color);
+
+    @include media.media-tablet {
+      text-align: unset;
+      font-size: 24px;
+    }
+
+    @include media.media-desktop {
+      font-size: 32px;
+    }
+  }
+
+  &__date {
+    margin: 12px 0 0 16px;
+    color: var(--news-page-date-color);
+  }
+}
