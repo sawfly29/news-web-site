@@ -1,0 +1,41 @@
+@use "src/styles/mixins/styles-reset";
+@use "src/styles/mixins/media";
+
+.news-form {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    font-size: 24px;
+  }
+
+  &__add-image-container {
+    height: fit-content;
+
+    @include media.media-tablet {
+      width: 50%;
+    }
+  }
+
+  &__add-image-button {
+    width: 100%;
+  }
+
+  &__actions {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+
+    @include media.media-mobile {
+      button:nth-child(n+2) {
+        margin-top: 12px;
+      }
+    }
+
+    @include media.media-tablet {
+      width: 50%;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}

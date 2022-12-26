@@ -1,0 +1,38 @@
+@use "src/styles/mixins/styles-reset";
+@use "src/styles/mixins/media";
+
+:host {
+  width: 100%;
+  max-width: 600px;
+
+  .news-preview {
+    @include media.media-tablet {
+      height: 100%;
+    }
+
+    &__content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &__header {
+      margin-top: 12px;
+      padding: unset;
+      font-size: 24px;
+      color: var(--news-preview-title-color);
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    &__date {
+      font-size: 12px;
+      color: var(--news-preview-date-color);
+    }
+  }
+}

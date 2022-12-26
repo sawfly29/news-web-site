@@ -1,0 +1,38 @@
+<h1 mat-dialog-title class="news-form__header">Создать новость</h1>
+<form class="news-form" [formGroup]="newsForm" mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Название</mat-label>
+    <input formControlName="title" matInput>
+    <mat-error>Поле обязательно для заполнения</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Описание</mat-label>
+    <textarea cdkTextareaAutosize matInput formControlName="description"></textarea>
+  </mat-form-field>
+  <div class="news-form__add-image-container">
+    <input
+      formControlName="imageUpload"
+      hidden="false"
+      #imageUpload
+      type="file"
+      onclick="this.value=null"
+      (change)="onImageUploadClick($event)"
+      accept="image/*"
+    />
+    <button
+      class="news-form__add-image-button"
+      mat-flat-button color="primary"
+      (click)="imageUpload.click()"
+    >
+      Загрузите изображение
+    </button>
+  </div>
+  <mat-error *ngIf="imageUploadControl.errors && imageUploadControl.touched">Поле обязательно для заполнения</mat-error>
+  <p *ngIf="!!uploadedImage" class="news-form__image-loaded-caption">Файл {{ uploadedImage.name }} успешно
+    загружен</p>
+  <div class="news-form__actions">
+    <button mat-raised-button (click)="onCancelClick()">Отменить</button>
+    <button mat-raised-button color="primary" (click)="onSaveClick()">Сохранить</button>
+  </div>
+</form>
+
