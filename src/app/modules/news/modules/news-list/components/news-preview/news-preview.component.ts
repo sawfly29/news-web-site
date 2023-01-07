@@ -10,7 +10,7 @@ import { CustomNews } from '../../../../types/custom-news.type';
 export class NewsPreviewComponent implements OnInit {
   @Input() newsPreviewData: NewsPreview | CustomNews;
 
-  imageSource?: string = '';
+  imageSource: string;
   newsUrl: string[] = [];
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class NewsPreviewComponent implements OnInit {
 
   private setInitialProps() {
     if ('url' in this.newsPreviewData) {
-      this.imageSource = this.newsPreviewData.titleImageUrl;
+      this.imageSource = this.newsPreviewData.titleImageUrl || '';
       this.newsUrl.push(...this.getCorrectLinkParams(this.newsPreviewData.url));
     } else {
       this.imageSource = this.newsPreviewData.titleImageRaw;

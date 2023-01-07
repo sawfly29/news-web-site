@@ -1,17 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+const mockImageLink = 'https://www.freeiconspng.com/uploads/no-image-icon-6.png';
+
 @Component({
   selector: 'app-news-preview-image',
   templateUrl: './news-preview-image.component.html',
   styleUrls: ['./news-preview-image.component.scss'],
 })
 export class NewsPreviewImageComponent implements OnInit {
-  @Input() src?: string;
+  @Input() src: string;
 
   isImageLoading = true;
-
-  readonly mockImageLink =
-    'https://www.freeiconspng.com/uploads/no-image-icon-6.png';
 
   ngOnInit() {
     this.checkInputImageSrc();
@@ -22,12 +21,12 @@ export class NewsPreviewImageComponent implements OnInit {
   }
 
   onImageLoadError() {
-    this.src = this.mockImageLink;
+    this.src = mockImageLink;
   }
 
   private checkInputImageSrc() {
     if (!this.src) {
-      this.src = this.mockImageLink;
+      this.src = mockImageLink;
     }
   }
 }

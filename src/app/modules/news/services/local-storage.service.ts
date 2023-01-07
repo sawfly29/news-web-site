@@ -12,7 +12,7 @@ export class LocalStorageService {
     }
   }
 
-  getLocalStorageData<T = any>(key: string): T | null { // eslint-disable-line
+  getLocalStorageData<T = unknown>(key: string): T | null {
     try {
       return JSON.parse(localStorage.getItem(key) || '');
     } catch (e) {

@@ -11,21 +11,21 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class BadRequestNewsInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
 
-  // eslint-disable-next-line
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(
-      catchError((err) => {
-        if (err.status === 400 && this.checkNewsAffilation(request.url)) {
-          this.router.navigate(['/404']);
-        }
-        return throwError(err.error || err.statusText);
-      })
-    );
+  constructor(private router: Router,
+  ) {
   }
 
-  private checkNewsAffilation(url: string): boolean {
-    return url.includes('api/news/item/avto-novosti');
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return next.handle(request).pipe(catchError((err) => {
+      if (err.status === 400 && this.checkNewsAffiliation(request.url)) {
+        this.router.navigate(['/404']);
+      }
+      return throwError(err.error || err.statusText);
+    }));
+  }
+
+  private checkNewsAffiliation(url: string): boolean {
+    return url.includes('api/news/item/news');
   }
 }

@@ -1,10 +1,8 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-news-page-content',
-  templateUrl: './news-page-content.component.html',
-  styleUrls: ['./news-page-content.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  template: '<div class="news-page__content" [innerHTML]="rawContent"></div>',
 })
 export class NewsPageContentComponent {
   @Input() rawContent: string;

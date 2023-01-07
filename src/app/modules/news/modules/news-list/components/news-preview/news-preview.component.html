@@ -4,16 +4,12 @@
     [src]="imageSource"
   ></app-news-preview-image>
   <mat-card-content class="news-preview__content">
-    <mat-card-header class="news-preview__header">{{
-      newsPreviewData.title
-    }}</mat-card-header>
+    <mat-card-header class="news-preview__header">
+      {{ newsPreviewData.title }}
+    </mat-card-header>
     <mat-card-footer class="news-preview__footer">
-      <time class="news-preview__date">
-        {{ newsPreviewData.publishedDate | date }}
-      </time>
-      <a *ngIf="newsUrl.length" [routerLink]="newsUrl" mat-button
-        >Подробнее...</a
-      >
+      <time class="news-preview__date">{{ newsPreviewData.publishedDate | date }}</time>
+      <a *ngIf="newsUrl.length" [routerLink]="newsUrl" mat-button>Подробнее...</a>
     </mat-card-footer>
   </mat-card-content>
 </mat-card>

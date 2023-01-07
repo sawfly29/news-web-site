@@ -11,18 +11,23 @@ import { FullNews } from '../../../../interfaces/full-news.interface';
   styleUrls: ['./news-page.component.scss'],
 })
 export class NewsPageComponent {
-  news$: Observable<FullNews> = this.newsService.loadNewsItem(
-    this.router.routerState.snapshot.url
-  );
+  readonly news$: Observable<FullNews> = this.newsService.loadFullNews(this.router.routerState.snapshot.url);
 
   readonly breadcrumbs: Breadcrumb[] = [
     {
       title: 'Список новостей',
-      path: '/avto-novosti',
+      path: '/news',
       class: 'breadcrumbs__link_parent',
     },
-    { title: 'Новость', class: 'breadcrumbs__link_current' },
+    {
+      title: 'Новость',
+      class: 'breadcrumbs__link_current',
+    },
   ];
 
-  constructor(private router: Router, private newsService: NewsService) {}
+  constructor(
+    private router: Router,
+    private newsService: NewsService,
+  ) {
+  }
 }

@@ -4,7 +4,6 @@ import { CustomNews } from '../types/custom-news.type';
 import { NewsPreview } from '../interfaces/news-preview.interface';
 import { LocalStorageService } from './local-storage.service';
 import { HttpClient } from '@angular/common/http';
-import { NewsResponse } from '../interfaces/news-response.interface';
 import { NewsStore } from '../types/news-store.type';
 import { FullNews } from '../interfaces/full-news.interface';
 
@@ -15,16 +14,16 @@ export const NEWS_LOCAL_STORAGE_KEY = 'news';
 })
 export class NewsService {
   news$ = new Subject<NewsStore>();
-  private readonly NEWS_API = 'https://webapi.autodoc.ru/api/news';
+  private readonly NEWS_API = 'http://localhost:3004';
   private readonly loadAmount = 10;
   private currentNewsPage = 0;
   private newsStorage: NewsStore = [];
-  private newsAmount = 0;
 
   constructor(
     private localStorageService: LocalStorageService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+  ) {
+  }
 
   loadNews(): Observable<NewsStore> {
     this.currentNewsPage++;
@@ -33,17 +32,15 @@ export class NewsService {
       ? this.getNewsPreviews()
       : this.cachedNewsStrategy();
 
-    return newsObs$.pipe(
-      tap((newsResponse) => {
-        this.newsStorage.push(...newsResponse);
-        this.emitCards();
-      })
-    );
+    return newsObs$.pipe(tap((newsResponse) => {
+      this.newsStorage.push(...newsResponse);
+      this.emitCards();
+    }));
   }
 
-  loadNewsItem(newsLink: string): Observable<FullNews> {
+  loadFullNews(newsLink: string): Observable<FullNews> {
     return this.http
-      .get<FullNews>(`${this.NEWS_API}/item${newsLink}`)
+      .get<FullNews>(`${this.NEWS_API}${newsLink}`)
       .pipe(catchError(() => EMPTY));
   }
 
@@ -55,10 +52,7 @@ export class NewsService {
     this.newsStorage.unshift(customNews);
     const currentLocalStorage = this.getLocalStorageNews();
     currentLocalStorage.unshift(customNews);
-    this.localStorageService.setLocalStorageData(
-      NEWS_LOCAL_STORAGE_KEY,
-      JSON.stringify(currentLocalStorage)
-    );
+    this.localStorageService.setLocalStorageData(NEWS_LOCAL_STORAGE_KEY, JSON.stringify(currentLocalStorage));
   }
 
   private cachedNewsStrategy(): Observable<NewsStore> {
@@ -79,15 +73,7 @@ export class NewsService {
 
   private getNewsPreviews(): Observable<NewsPreview[]> {
     return this.http
-      .get<NewsResponse>(
-        `${this.NEWS_API}/${this.currentNewsPage}/${this.loadAmount}`
-      )
-      .pipe(
-        catchError(() => EMPTY),
-        map(({ news, totalCount }) => {
-          this.newsAmount = totalCount;
-          return news;
-        })
-      );
+      .get<NewsPreview[]>(`${this.NEWS_API}/news?_page=${this.currentNewsPage}&_limit=${this.loadAmount}`)
+      .pipe(catchError(() => EMPTY)); // TODO: catch 404 on getNewsPreview
   }
 }

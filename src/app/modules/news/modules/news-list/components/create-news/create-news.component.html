@@ -15,12 +15,12 @@
   </mat-form-field>
   <div class="news-form__add-image-container">
     <input
-      formControlName="imageUpload"
-      hidden="false"
-      type="file"
-      onclick="this.value=null"
-      accept="image/*"
       #imageUpload
+      accept="image/*"
+      hidden="false"
+      formControlName="imageUpload"
+      onclick="this.value=null"
+      type="file"
       (change)="onImageUploadClick($event)"
     />
     <button

@@ -1,10 +1,12 @@
-# AutodocTestTask
+# NewsWebSite
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.3.
 
-## Development server
+## Development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm start` to start developer frontend application along with backend server.
+Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Backend server runs on `http://localhost:3004/`.
 
 ## Build
 
@@ -35,10 +37,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 подобного контента.
 Источник данных:
 
-1 - Список новостей: https://webapi.autodoc.ru/api/news/1/10 (последние 2 параметра - номер
+1 - Список новостей: http://localhost:3004/news?_page=1&_limit=10 (последние 2 параметра - номер
 страницы и количество элементов на ней).
 
 2 - Отдельная новость: url приходит на этапе получения списка новостей, пример ссылки:
-https://webapi.autodoc.ru/api/news/item/avto-novosti/volkswagen_amarok_pickup
-
-Результат выполнения задания должен быть доступен по ссылке на репозиторий в Github.
+http://localhost:3004/lorem-ipsum-dolor-sit-amet

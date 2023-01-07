@@ -1,9 +1,9 @@
 <img
+  class="news-preview__image"
   alt="news-image"
   mat-card-image
   [src]="src"
   [ngClass]="{
-    'news-preview__image': true,
     'news-preview__image_hidden': isImageLoading
   }"
   (load)="onImageLoad()"
