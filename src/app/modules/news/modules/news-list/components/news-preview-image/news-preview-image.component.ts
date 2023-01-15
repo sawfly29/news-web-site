@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 const mockImageLink = 'https://www.freeiconspng.com/uploads/no-image-icon-6.png';
 
@@ -6,6 +6,7 @@ const mockImageLink = 'https://www.freeiconspng.com/uploads/no-image-icon-6.png'
   selector: 'app-news-preview-image',
   templateUrl: './news-preview-image.component.html',
   styleUrls: ['./news-preview-image.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsPreviewImageComponent implements OnInit {
   @Input() src: string;

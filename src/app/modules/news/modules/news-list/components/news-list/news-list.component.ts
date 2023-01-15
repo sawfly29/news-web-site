@@ -1,20 +1,23 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { NewsService } from '../../../../services/news.service';
 import { NewsStore } from '../../../../types/news-store.type';
 import { CreateNewsComponent } from '../create-news/create-news.component';
+import { NewsServiceBase } from '../../../../class/news-base.class';
 
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit {
 
   news$: Observable<NewsStore> = this.newsService.news$;
 
   isLoadingNews = true;
+  imageLoadThresholdLevel: number = 0.1;
+  imageLoadThreshold: number = 1;
 
   private readonly dialogRefConfig: MatDialogConfig = {
     width: '100%',
@@ -25,32 +28,41 @@ export class NewsListComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private newsService: NewsService,
+    private newsService: NewsServiceBase,
+    private ref: ChangeDetectorRef,
   ) {
   }
 
   ngOnInit() {
+    this.initDisplayParams();
+
     this.newsService.loadNews().subscribe(() => this.isLoadingNews = false);
   }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    if (this.isLoadingNews) return;
+    if (this.isLoadingNews || this.newsService.isMaxCapacityReached) return;
 
-    const pos =
-      (document.documentElement.scrollTop || document.body.scrollTop) +
-      document.documentElement.offsetHeight;
-    const max = document.documentElement.scrollHeight;
+    const docElement = document.documentElement;
 
-    if (pos === max) {
+    if (Math.abs(docElement.scrollHeight - docElement.scrollTop - docElement.clientHeight) < this.imageLoadThreshold) {
       this.isLoadingNews = true;
       this.newsService.loadNews().subscribe(() => this.isLoadingNews = false);
     }
   }
 
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.initDisplayParams();
+  }
+
   onCreateNewsButtonClick() {
     const dialogRef = this.dialog.open(CreateNewsComponent, this.dialogRefConfig);
 
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe(() => this.ref.markForCheck());
+  }
+
+  private initDisplayParams() {
+    this.imageLoadThreshold = document.documentElement.clientHeight * this.imageLoadThresholdLevel;
   }
 }

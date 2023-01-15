@@ -12,13 +12,14 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export class BadRequestNewsInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
   ) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError((err) => {
-      if (err.status === 400 && this.checkNewsAffiliation(request.url)) {
+      if (err.status === 404 && this.checkNewsAffiliation(request.url)) {
         this.router.navigate(['/404']);
       }
       return throwError(err.error || err.statusText);
@@ -26,6 +27,6 @@ export class BadRequestNewsInterceptor implements HttpInterceptor {
   }
 
   private checkNewsAffiliation(url: string): boolean {
-    return url.includes('api/news/item/news');
+    return url.includes('/news/');
   }
 }

@@ -7,7 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewsModule } from './modules/news/news.module';
 import { BadRequestNewsInterceptor } from './bad-request-news-interceptor.service';
-import { SharedModule } from './modules/shared/shared.module';
+import { NewsServiceBase } from './modules/news/class/news-base.class';
+import { ProductionNewsService } from './modules/news/services/production-news.service';
+import { environment } from '../environments/environment';
+import { DevelopmentNewsService } from './modules/news/services/development-news.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,13 +21,16 @@ import { SharedModule } from './modules/shared/shared.module';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    SharedModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BadRequestNewsInterceptor,
       multi: true,
+    },
+    {
+      provide: NewsServiceBase,
+      useClass: environment.production ? ProductionNewsService : DevelopmentNewsService,
     },
   ],
   bootstrap: [AppComponent],

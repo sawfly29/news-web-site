@@ -8,17 +8,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NewsComponent } from './components/news/news.component';
 
-const materialModules = [
-  MatButtonModule,
-  MatIconModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDialogModule,
-];
-
 @NgModule({
   declarations: [NewsComponent],
-  imports: [CommonModule, RouterModule, RouterOutlet, ...materialModules],
-  exports: [...materialModules],
+  imports: [
+    CommonModule,
+    RouterModule,
+    RouterOutlet,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+  ],
+  exports: [NewsComponent],
 })
-export class NewsModule {}
+export class NewsModule {
+}
