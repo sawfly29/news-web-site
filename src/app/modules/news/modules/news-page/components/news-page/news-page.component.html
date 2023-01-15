@@ -1,6 +1,6 @@
 <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-<mat-card class="news-page" *ngIf="(news$ | async) as news">
+<mat-card class="news-page" *ngIf="news$ | async as news">
   <mat-card-header class="news-page__header">{{ news.title }}</mat-card-header>
   <time class="news-page__date">{{ news.publishedDate | date }}</time>
-  <div class="news-page__content" [innerHTML]="news.text"></div>
+  <app-news-page-content [rawContent]="news.text"></app-news-page-content>
 </mat-card>

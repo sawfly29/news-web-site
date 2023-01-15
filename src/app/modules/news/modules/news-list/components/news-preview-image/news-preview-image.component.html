@@ -1,0 +1,14 @@
+<img
+  class="news-preview__image"
+  alt="news-image"
+  mat-card-image
+  [src]="src"
+  [ngClass]="{
+    'news-preview__image_hidden': isImageLoading
+  }"
+  (load)="onImageLoad()"
+  (error)="onImageLoadError()"
+/>
+<div *ngIf="isImageLoading" class="news-preview__loader-container">
+  <mat-spinner diameter="48"></mat-spinner>
+</div>

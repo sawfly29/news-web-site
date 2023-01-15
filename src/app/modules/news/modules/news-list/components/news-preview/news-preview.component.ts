@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NewsPreview } from "../../../../interfaces/news-preview.interface";
-import { CustomNews } from "../../../../types/custom-news.type";
+import { NewsPreview } from '../../../../interfaces/news-preview.interface';
+import { CustomNews } from '../../../../types/custom-news.type';
 
 @Component({
   selector: 'app-news-preview',
@@ -10,7 +10,7 @@ import { CustomNews } from "../../../../types/custom-news.type";
 export class NewsPreviewComponent implements OnInit {
   @Input() newsPreviewData: NewsPreview | CustomNews;
 
-  imageSource: string = '';
+  imageSource: string;
   newsUrl: string[] = [];
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class NewsPreviewComponent implements OnInit {
 
   private setInitialProps() {
     if ('url' in this.newsPreviewData) {
-      this.imageSource = this.newsPreviewData.titleImageUrl;
+      this.imageSource = this.newsPreviewData.titleImageUrl || '';
       this.newsUrl.push(...this.getCorrectLinkParams(this.newsPreviewData.url));
     } else {
       this.imageSource = this.newsPreviewData.titleImageRaw;
@@ -27,6 +27,6 @@ export class NewsPreviewComponent implements OnInit {
   }
 
   private getCorrectLinkParams(url: string): string[] {
-    return ['/', ...url.split('/')]
+    return ['/', ...url.split('/')];
   }
 }

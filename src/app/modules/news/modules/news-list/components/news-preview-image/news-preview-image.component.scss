@@ -1,0 +1,18 @@
+$aspect-ratio: 1.5;
+
+:host {
+  flex-shrink: 0;
+  aspect-ratio: $aspect-ratio;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.news-preview__image {
+  aspect-ratio: $aspect-ratio;
+  object-fit: cover;
+
+  &_hidden {
+    display: none;
+  }
+}

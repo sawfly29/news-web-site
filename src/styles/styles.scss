@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@use "src/styles/mixins/media";
+
 body,
 html {
   margin: 0;
@@ -28,3 +30,62 @@ body {
 img {
   width: 100%;
 }
+
+$mobile-indent: 12px;
+$tablet-indent: 18px;
+$desktop-indent: 24px;
+
+.article {
+  margin-top: 12px;
+
+  &__content {
+    text-align: justify;
+
+    @include media.media-desktop {
+      columns: 2;
+      column-gap: 32px;
+    }
+  }
+
+  &__main-illustration {
+    padding-right: 12px;
+
+    @include media.media-tablet {
+      padding-right: 24px;
+      max-width: 300px;
+      float: left;
+    }
+  }
+
+  &__paragraph {
+    text-indent: $mobile-indent;
+
+    @include media.media-tablet {
+      text-indent: $tablet-indent;
+    }
+
+    @include media.media-desktop {
+      text-indent: $desktop-indent;
+    }
+
+    &:nth-child(2) {
+      margin-top: unset;
+    }
+  }
+
+  &__illustration-container {
+    margin-top: 12px;
+    display: grid;
+
+    @include media.media-tablet {
+      margin-top: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    @include media.media-desktop {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+

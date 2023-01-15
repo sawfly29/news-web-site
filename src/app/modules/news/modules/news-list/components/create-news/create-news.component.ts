@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
-import { UntilDestroy } from "@ngneat/until-destroy";
-import { NewsService } from "../../../../services/news.service";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { NewsService } from '../../../../services/news.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'create-news',
+  selector: 'app-create-news',
   templateUrl: './create-news.component.html',
   styleUrls: ['./create-news.component.scss'],
 })
 export class CreateNewsComponent implements OnInit {
-
-  uploadedImage: File;
-  readonly imageUploadControl = new FormControl<File[]>([], [Validators.required])
+  uploadedImage?: File;
+  readonly imageUploadControl = new FormControl<File[]>([], [Validators.required]);
 
   readonly newsForm = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
@@ -21,10 +20,8 @@ export class CreateNewsComponent implements OnInit {
     imageUpload: this.imageUploadControl,
   });
 
-  constructor(
-    public dialogRef: MatDialogRef<CreateNewsComponent>,
-    private newsService: NewsService,
-  ) {
+  constructor(public dialogRef: MatDialogRef<CreateNewsComponent>,
+              private newsService: NewsService) {
   }
 
   ngOnInit() {
@@ -36,11 +33,13 @@ export class CreateNewsComponent implements OnInit {
   }
 
   onImageUploadClick(fileInputEvent: Event) {
-    this.uploadedImage = (<HTMLInputElement>fileInputEvent.target).files![0];
+    const formUploadedImage = (<HTMLInputElement>fileInputEvent.target).files;
+
+    if (formUploadedImage) this.uploadedImage = formUploadedImage[0];
   }
 
   async onSaveClick() {
-    this.newsForm.controls.imageUpload.markAsTouched()
+    this.newsForm.controls.imageUpload.markAsTouched();
     if (this.newsForm.invalid) return this.newsForm.updateValueAndValidity();
 
     await this.saveCustomNews();
@@ -52,12 +51,12 @@ export class CreateNewsComponent implements OnInit {
     });
   }
 
-  private async toBase64(): Promise<string> {
+  private async toBase64(uploadedFile: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsDataURL(this.uploadedImage);
+      reader.readAsDataURL(uploadedFile);
       reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   }
 
@@ -76,14 +75,16 @@ export class CreateNewsComponent implements OnInit {
   }
 
   private async saveCustomNews() {
-    const {title, description} = this.newsForm.value;
-    const base64Image = await this.toBase64();
-    this.newsService.saveNews({
-      titleImageRaw: base64Image,
-      title: title || '',
-      description: description || '',
-      publishedDate: `${new Date().toJSON()}`,
-    });
+    if (this.uploadedImage) {
+      const { title, description } = this.newsForm.value;
+      const base64Image = await this.toBase64(this.uploadedImage);
+      this.newsService.saveNews({
+        titleImageRaw: base64Image,
+        title: title || '',
+        description: description || '',
+        publishedDate: `${new Date().toJSON()}`,
+      });
+    }
   }
 
   private initializeDialogRef() {

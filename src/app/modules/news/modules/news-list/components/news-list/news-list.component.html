@@ -4,16 +4,19 @@
     <button
       class="news-list__news-create-action"
       (click)="onCreateNewsButtonClick()"
-      mat-raised-button color="primary"
+      mat-raised-button
+      color="primary"
     >
       Создать новость
     </button>
   </header>
   <div class="news-list__list">
-    <app-news-preview *ngFor="let news of news$ | async" [newsPreviewData]="news"></app-news-preview>
+    <app-news-preview
+      *ngFor="let news of news$ | async"
+      [newsPreviewData]="news"
+    ></app-news-preview>
   </div>
   <div *ngIf="isLoadingNews" class="spinner-container">
-    <mat-spinner diameter="48"></mat-spinner>
+    <mat-spinner diameter="64"></mat-spinner>
   </div>
 </section>
-

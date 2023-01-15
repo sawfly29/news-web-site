@@ -1,0 +1,10 @@
+<nav class="breadcrumbs">
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; index as i">
+    <a [class]="breadcrumb.class" [routerLink]="breadcrumb.path">
+      {{ breadcrumb.title }}
+    </a>
+    <span class="breadcrumbs__divider" *ngIf="i < breadcrumbs.length - 1">
+      /
+    </span>
+  </ng-container>
+</nav>
