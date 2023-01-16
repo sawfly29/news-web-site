@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NewsService } from '../../../../services/news.service';
 import { Breadcrumb } from '../../../../interfaces/breadcrumbs';
 import { FullNews } from '../../../../interfaces/full-news.interface';
+import { NewsServiceBase } from '../../../../class/news-base.class';
 
 @Component({
   selector: 'app-news-page',
   templateUrl: './news-page.component.html',
   styleUrls: ['./news-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsPageComponent {
   readonly news$: Observable<FullNews> = this.newsService.loadFullNews(this.router.routerState.snapshot.url);
@@ -27,7 +28,7 @@ export class NewsPageComponent {
 
   constructor(
     private router: Router,
-    private newsService: NewsService,
+    private newsService: NewsServiceBase,
   ) {
   }
 }

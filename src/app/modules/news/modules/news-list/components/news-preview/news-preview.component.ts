@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { NewsPreview } from '../../../../interfaces/news-preview.interface';
 import { CustomNews } from '../../../../types/custom-news.type';
 
@@ -6,6 +6,7 @@ import { CustomNews } from '../../../../types/custom-news.type';
   selector: 'app-news-preview',
   templateUrl: './news-preview.component.html',
   styleUrls: ['./news-preview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsPreviewComponent implements OnInit {
   @Input() newsPreviewData: NewsPreview | CustomNews;

@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { NewsService } from '../../../../services/news.service';
+import { NewsServiceBase } from '../../../../class/news-base.class';
 
 @UntilDestroy()
 @Component({
   selector: 'app-create-news',
   templateUrl: './create-news.component.html',
   styleUrls: ['./create-news.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateNewsComponent implements OnInit {
   uploadedImage?: File;
@@ -20,8 +21,10 @@ export class CreateNewsComponent implements OnInit {
     imageUpload: this.imageUploadControl,
   });
 
-  constructor(public dialogRef: MatDialogRef<CreateNewsComponent>,
-              private newsService: NewsService) {
+  constructor(
+    public dialogRef: MatDialogRef<CreateNewsComponent>,
+    private newsService: NewsServiceBase,
+  ) {
   }
 
   ngOnInit() {

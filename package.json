@@ -10,6 +10,7 @@
     "start": "npx ts-node ./mock-api/server.js & ng serve",
     "start:frontend": "ng serve",
     "start:json-server": "npx ts-node ./mock-api/server.js",
+    "regenerate-data-base": "npx ts-node -e 'require(\"./mock-api/db-creation/db-creator.ts\").createJsonDB();'",
     "build": "ng build",
     "deploy:GitHub-repo": "ng deploy --base-href=https://sawfly29.github.io/news-web-site/",
     "watch": "ng build --watch --configuration development",

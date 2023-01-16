@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SharedModule } from '../../../shared/shared.module';
 import { NewsPreviewImageComponent } from './components/news-preview-image/news-preview-image.component';
 
 @NgModule({
@@ -36,7 +35,6 @@ import { NewsPreviewImageComponent } from './components/news-preview-image/news-
     MatNativeDateModule,
     FormsModule,
     MatProgressSpinnerModule,
-    SharedModule,
   ],
 })
 export class NewsListModule {}
