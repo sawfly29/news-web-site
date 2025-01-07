@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #2f80ed;
+  color: orange;
   padding: var(--mobile-vertical-padding) 12px;
 
   @include media.media-tablet {
